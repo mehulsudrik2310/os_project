@@ -2,10 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:os_project/pages.dart';
 import 'package:os_project/inputpages.dart';
 
-class Input extends StatelessWidget {
+int signal = 0;
+
+class Info extends StatelessWidget {
 
   final Pages pages;
-  Input({ @required this.pages });
+  Info({ @required this.pages });
+
+  void check() {
+    if(pages.title == 'FIFO PRA') {
+      signal = 1;
+    }
+    if(pages.title == 'LIFO PRA') {
+      signal = 2;
+    }
+    if(pages.title == 'LRU PRA') {
+      signal = 3;
+    }
+    if(pages.title == 'Optimal PRA') {
+      signal = 4;
+    }
+    if(pages.title == 'Random PRA') {
+      signal = 5;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +61,7 @@ class Input extends StatelessWidget {
               RaisedButton(
                 child: Text('Go to input pages',style: TextStyle(fontSize: 20,color: Colors.green),),
                 onPressed:() {
+                  check();
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>GetTextFieldValue()),);
                   },
               ),

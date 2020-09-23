@@ -1,8 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:os_project/fifo.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:os_project/Scamming.dart';
+import 'package:os_project/infopage.dart';
+import 'package:os_project/fifo.dart';
+import 'package:os_project/lifo.dart';
+import 'package:os_project/lru.dart';
+import 'package:os_project/optimal.dart';
+import 'package:os_project/random.dart';
 
 final pagesEntryTextBox = TextEditingController();
 final pageCapacityTextBox = TextEditingController();
@@ -33,6 +36,21 @@ class _GetTextFieldValueState extends State<GetTextFieldValue> {
       pagesEntryTextBox.text = '';
       pageCapacityTextBox.text = '';
       pages_arr.clear();
+      if(signal == 1) {
+        toprint2.clear();
+      }
+      if(signal == 2) {
+        toprint2.clear();
+      }
+      if(signal == 3) {
+        toprint3.clear();
+      }
+      if(signal == 4) {
+        toprint4.clear();
+      }
+      if(signal == 5) {
+        toprint5.clear();
+      }
       frame_capacity = 0;
     });
   }
@@ -109,9 +127,27 @@ class _GetTextFieldValueState extends State<GetTextFieldValue> {
                   ),
                   RaisedButton(
                     onPressed: () {
-                      fifoalgo1(pages_arr, pages_arr.length, frame_capacity);
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>FIFO()),);
-                      },
+                      if(signal == 1) {
+                        fifoalgo(pages_arr, pages_arr.length, frame_capacity);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>FIFO()),);
+                      }
+                      if(signal == 2) {
+                        lifoalgo(pages_arr, pages_arr.length, frame_capacity);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>LIFO()),);
+                      }
+                      if(signal == 3) {
+                        lrualgo(pages_arr, pages_arr.length, frame_capacity);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>LRU()),);
+                      }
+                      if(signal == 4) {
+                        optimalalgo(pages_arr, pages_arr.length, frame_capacity);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>OPTIMAL()),);
+                      }
+                      if(signal == 5) {
+                        randomalgo(pages_arr, pages_arr.length, frame_capacity);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>RANDOM()),);
+                      }
+                    },
                     color: Colors.redAccent,
                     textColor: Colors.white,
                     padding: EdgeInsets.fromLTRB(10, 10, 10, 10),

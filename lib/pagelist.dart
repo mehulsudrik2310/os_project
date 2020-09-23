@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:os_project/algopage.dart';
 import 'package:os_project/pages.dart';
+import 'package:os_project/infopage.dart';
 
 class PageList extends StatefulWidget {
   @override
@@ -34,7 +34,7 @@ class _PageListState extends State<PageList> {
   Widget _buildTile(Pages page) {
     return ListTile(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Input(pages: page)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Info(pages: page)));
       },
       contentPadding: EdgeInsets.all(25),
       title: Column(

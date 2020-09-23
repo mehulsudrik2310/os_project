@@ -1,18 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:os_project/inputpages.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-int hit = 0;
-int fault = 0;
-List<int> toprint = new List();
-void fifoalgo () {
-  print(fifoalgo1(pages_arr, pages_arr.length, frame_capacity));
-  print(hit);
-  print(toprint);
-}
+int hit1 = 0;
+int fault1 = 0;
+List<int> toprint1 = new List();
 
-int fifoalgo1(List<int>pages, int n, int capacity) {
+int fifoalgo(List<int> pages, int n, int capacity) {
+
   int frameSize = capacity;
   int position = -1;
   List<int> frame =  new List(frameSize);
@@ -26,19 +21,17 @@ int fifoalgo1(List<int>pages, int n, int capacity) {
       if(position>(frameSize-1))
         position=0;
       frame[position] = pages[i];
-      //print(frame);
-      toprint.addAll(frame);
-      fault++;
+      toprint1.addAll(frame);
+      fault1++;
 
     }
     else if(frame.contains(pages[i]))
     {
-      //print(frame);
-      toprint.addAll(frame);
-      hit++;
+      toprint1.addAll(frame);
+      hit1++;
     }
   }
-  return fault;
+  return fault1;
 }
 
 
@@ -49,12 +42,20 @@ class FIFO extends StatefulWidget {
 
 class _FIFOState extends State<FIFO> {
 
-  int i=0,start=0,end=0,click=0;
+  String msg = '';
+  int start=0,end=0,click=0;
+
   void update() {
     setState(() {
       start = click*frame_capacity;
       end = (click+1)*frame_capacity;
       click++;
+    });
+  }
+
+  void update_msg() {
+    setState(() {
+      msg = 'You are done with the ans of the list';
     });
   }
 
@@ -71,13 +72,22 @@ class _FIFOState extends State<FIFO> {
             ),
             Padding(
                 padding: EdgeInsets.fromLTRB(8, 8, 8, 40),
-                child : Text(toprint.getRange(start, end).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange))
+                child : Text(toprint1.getRange(start, end).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange))
             ),
             IconButton(
               onPressed: () {
-                update();
+                if(toprint1.length > end) {
+                  update();
+                }
+                else {
+                  update_msg();
+                }
               },
               icon: Icon(Icons.arrow_forward),
+            ),
+            Padding(
+                padding: EdgeInsets.fromLTRB(8, 8, 8, 40),
+                child : Text('$msg', style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange))
             ),
           ],
         ),
