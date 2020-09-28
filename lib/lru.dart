@@ -5,12 +5,14 @@ import 'package:os_project/inputpages.dart';
 List<List> toprint3 = new List();
 int fault3 = 0;
 int hit3 = 0;
+List <int> fault3_arr = new List();
+List <int> hit3_arr = new List();
 
 int lrualgo(List<int> pages, int n, int capacity) {
-  List<int> frame = new List();
-  List<int> st = new List();
+  List <int> frame = new List();
+  List <int> st = new List();
   for (int i = 0; i < n; i++) {
-    List<int> s1 = new List();
+    List <int> s1 = new List();
     if (!frame.contains(pages[i])) {
       if (frame.length < capacity) {
         frame.add(pages[i]);
@@ -22,10 +24,8 @@ int lrualgo(List<int> pages, int n, int capacity) {
           }
           toprint3.add(s1);
         }
-        print("F - $frame");
-        print("ST - $st");
-        //  print(toprint);
-      } else {
+      }
+      else {
         int ind = st.removeAt(0);
 
         frame[ind] = pages[i];
@@ -33,14 +33,11 @@ int lrualgo(List<int> pages, int n, int capacity) {
         st.add(ind);
         s1.addAll(frame);
         toprint3.add(s1);
-
-        print("F - $frame");
-        print("ST - $st");
-        //print(toprint);
-
-        fault3 += 1;
+        fault3 ++;
+        fault3_arr.add(fault3);
       }
-    } else {
+    }
+    else {
       st.add(st.removeAt(st.indexOf(frame.indexOf(pages[i]))));
       if (frame.length <= capacity) {
         s1.addAll(frame);
@@ -51,14 +48,10 @@ int lrualgo(List<int> pages, int n, int capacity) {
       } else
         s1.addAll(frame);
       toprint3.add(s1);
-
       hit3++;
-      print("F - $frame");
-      print("ST - $st");
-//        print(toprint);
+      hit3_arr.add(hit3);
     }
   }
-  return fault3;
 }
 
 
@@ -69,21 +62,85 @@ class LRU extends StatefulWidget {
 
 class _LRUState extends State<LRU> {
 
-  String msg = '';
-  int i=0,start=0,end=0,click=0;
+  int click = 0;
+  int pclick = 1;
+  final int length = toprint3.length;
 
-  void update() {
-    setState(() {
-      start = click*frame_capacity;
-      end = (click+1)*frame_capacity;
-      click++;
-    });
+  Widget createTable() {
+    List<TableRow> rows = [];
+    rows.add(
+        TableRow(
+            children: <Widget> [
+              Text("Pages",style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange), textAlign: TextAlign.center,),
+            ]
+        )
+    );
+    for (int i = 0; i < frame_capacity; i++) {
+      if(click == 0)
+        rows.add(
+            TableRow(
+                children: <Widget> [
+                  Text(toprint3.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+                ]
+            )
+        );
+      else if(toprint3.elementAt(click-1).contains(toprint3.elementAt(click).elementAt(i)))
+        rows.add(
+            TableRow(
+                children: <Widget> [
+                  Text(toprint3.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green), textAlign: TextAlign.center,),
+                ]
+            )
+        );
+      else{
+        rows.add(
+            TableRow(
+                children: <Widget> [
+                  Text(toprint3.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+                ]
+            )
+        );
+      }
+    }
+    return Table(children: rows);
   }
 
-  void update_msg() {
-    setState(() {
-      msg = 'You are done with the ans of the list';
-    });
+
+  showAlertDialog(BuildContext context) {
+    Widget cancelButton = FlatButton(
+      child: Text("EXIT"),
+      onPressed:  () {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> GetTextFieldValue()),);
+        frame_capacity = 0;
+        pagesEntryTextBox.text = '';
+        pageCapacityTextBox.text = '';
+        pages_arr.clear();
+        toprint3.clear();
+      },
+    );
+
+    Widget continueButton = FlatButton(
+      child: Text("STAY"),
+      onPressed:  () {
+        return _LRUState();
+      },
+    );
+
+    AlertDialog alert = new AlertDialog(
+      title: Text("PROCESS COMPLETED"),
+      content: Text("YOU HAVE REACHED END OF THE ALGORITHM WHAT WOULD YOU LIKE TO DO?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   @override
@@ -94,28 +151,64 @@ class _LRUState extends State<LRU> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget> [
             Padding(
-                padding: EdgeInsets.fromLTRB(8, 8, 8, 40),
-                child : Text('Click on next arrow to see next set', style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange))
+                padding: EdgeInsets.fromLTRB(8, 8, 8, 10),
+                child : Text('Click on arrows to see sets', style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange))
             ),
             Padding(
                 padding: EdgeInsets.fromLTRB(8, 8, 8, 40),
-                child : Text(toprint3.getRange(start, end).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange))
-            ),
-            IconButton(
-              onPressed: () {
-                if(toprint3.length > end) {
-                  update();
-                }
-                else {
-                  update_msg();
-                }
-              },
-              icon: Icon(Icons.arrow_forward),
+                child : Text('Set: $pclick / $length', style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange))
             ),
             Padding(
-                padding: EdgeInsets.fromLTRB(8, 8, 8, 40),
-                child : Text('$msg', style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange))
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 40),
+              child : createTable(),
             ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: <Widget> [
+            //     Padding(
+            //       padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+            //       child : Text(hit1_arr.elementAt(1).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
+            //     ),
+            //     Padding(
+            //       padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+            //       child : Text(fault1_arr.elementAt(1).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
+            //     ),
+            //   ],
+            // ),
+            Row (
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget> [
+                IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    setState(() {
+                      if(click > 0) {
+                        click--;
+                        pclick--;
+                      }
+                    });
+                  },
+                ),
+                Padding(
+                  padding: EdgeInsets.all(40),
+                ),
+                IconButton(
+                  icon: Icon(Icons.arrow_forward),
+                  onPressed: () {
+                    print(fault3_arr);
+                    setState(() {
+                      if(toprint3.length > click+1) {
+                        click++;
+                        pclick++;
+                      }
+                      else {
+                        showAlertDialog(context);
+                      }
+                    });
+                  },
+                ),
+              ],
+            )
           ],
         ),
       ),

@@ -10,7 +10,7 @@ import 'package:os_project/random.dart';
 final pagesEntryTextBox = TextEditingController();
 final pageCapacityTextBox = TextEditingController();
 int frame_capacity = 0;
-List<int> pages_arr = new List();
+List <int> pages_arr = new List();
 
 class GetTextFieldValue extends StatefulWidget {
 
@@ -37,7 +37,7 @@ class _GetTextFieldValueState extends State<GetTextFieldValue> {
       pageCapacityTextBox.text = '';
       pages_arr.clear();
       if(signal == 1) {
-        toprint2.clear();
+        toprint1.clear();
       }
       if(signal == 2) {
         toprint2.clear();
@@ -127,25 +127,27 @@ class _GetTextFieldValueState extends State<GetTextFieldValue> {
                   ),
                   RaisedButton(
                     onPressed: () {
-                      if(signal == 1) {
-                        fifoalgo(pages_arr, pages_arr.length, frame_capacity);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>FIFO()),);
-                      }
-                      if(signal == 2) {
-                        lifoalgo(pages_arr, pages_arr.length, frame_capacity);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>LIFO()),);
-                      }
-                      if(signal == 3) {
-                        lrualgo(pages_arr, pages_arr.length, frame_capacity);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>LRU()),);
-                      }
-                      if(signal == 4) {
-                        optimalalgo(pages_arr, pages_arr.length, frame_capacity);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>OPTIMAL()),);
-                      }
-                      if(signal == 5) {
-                        randomalgo(pages_arr, pages_arr.length, frame_capacity);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>RANDOM()),);
+                      if(pages_arr.length != 0) {
+                        if(signal == 1) {
+                          fifoalgo(pages_arr, pages_arr.length, frame_capacity);
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>FIFO()),);
+                        }
+                        if(signal == 2) {
+                          lifoalgo(pages_arr, pages_arr.length, frame_capacity);
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>LIFO()),);
+                        }
+                        if(signal == 3) {
+                          lrualgo(pages_arr, pages_arr.length, frame_capacity);
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>LRU()),);
+                        }
+                        if(signal == 4) {
+                          optimalalgo(pages_arr, pages_arr.length, frame_capacity);
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>OPTIMAL()),);
+                        }
+                        if(signal == 5) {
+                          randomalgo(pages_arr, pages_arr.length, frame_capacity);
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>RANDOM()),);
+                        }
                       }
                     },
                     color: Colors.redAccent,
