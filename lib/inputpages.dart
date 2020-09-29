@@ -38,18 +38,38 @@ class _GetTextFieldValueState extends State<GetTextFieldValue> {
       pages_arr.clear();
       if(signal == 1) {
         toprint1.clear();
+        hit1 = 0;
+        fault1 = 0;
+        fault1_arr.clear();
+        hit1_arr.clear();
       }
       if(signal == 2) {
         toprint2.clear();
+        hit2 = 0;
+        fault2 = 0;
+        fault2_arr.clear();
+        hit2_arr.clear();
       }
       if(signal == 3) {
         toprint3.clear();
+        hit3 = 0;
+        fault3 = 0;
+        fault3_arr.clear();
+        hit3_arr.clear();
       }
       if(signal == 4) {
         toprint4.clear();
+        hit4 = 0;
+        fault4 = 0;
+        fault4_arr.clear();
+        hit4_arr.clear();
       }
       if(signal == 5) {
         toprint5.clear();
+        hit5 = 0;
+        fault5 = 0;
+        fault5_arr.clear();
+        hit5_arr.clear();
       }
       frame_capacity = 0;
     });

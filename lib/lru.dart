@@ -35,6 +35,12 @@ int lrualgo(List<int> pages, int n, int capacity) {
         toprint3.add(s1);
         fault3 ++;
         fault3_arr.add(fault3);
+        if(i==0) {
+          hit3_arr.add(0);
+        }
+        else {
+          hit3_arr.add(hit3_arr.elementAt(hit3_arr.length-1));
+        }
       }
     }
     else {
@@ -50,8 +56,10 @@ int lrualgo(List<int> pages, int n, int capacity) {
       toprint3.add(s1);
       hit3++;
       hit3_arr.add(hit3);
+      fault3_arr.add(fault3_arr.elementAt(fault3_arr.length-1));
     }
   }
+  return fault3;
 }
 
 
@@ -116,6 +124,10 @@ class _LRUState extends State<LRU> {
         pageCapacityTextBox.text = '';
         pages_arr.clear();
         toprint3.clear();
+        hit3 = 0;
+        fault3 = 0;
+        fault3_arr.clear();
+        hit3_arr.clear();
       },
     );
 
@@ -162,19 +174,19 @@ class _LRUState extends State<LRU> {
               padding: EdgeInsets.fromLTRB(8, 8, 8, 40),
               child : createTable(),
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: <Widget> [
-            //     Padding(
-            //       padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-            //       child : Text(hit1_arr.elementAt(1).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
-            //     ),
-            //     Padding(
-            //       padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-            //       child : Text(fault1_arr.elementAt(1).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
-            //     ),
-            //   ],
-            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget> [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                  child : Text(hit3_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                  child : Text(fault3_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
+                ),
+              ],
+            ),
             Row (
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget> [

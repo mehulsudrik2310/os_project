@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:os_project/graph.dart';
 import 'package:os_project/inputpages.dart';
 
 int hit1 = 0;
@@ -28,6 +29,12 @@ int fifoalgo(List<int> pages, int n, int capacity) {
       toprint1.add(s1);
       fault1++;
       fault1_arr.add(fault1);
+      if(i==0) {
+        hit1_arr.add(0);
+      }
+      else {
+        hit1_arr.add(hit1_arr.elementAt(hit1_arr.length-1));
+      }
     }
     else if(frame.contains(pages[i]))
     {
@@ -35,8 +42,10 @@ int fifoalgo(List<int> pages, int n, int capacity) {
       toprint1.add(s1);
       hit1++;
       hit1_arr.add(hit1);
+      fault1_arr.add(fault1_arr.elementAt(fault1_arr.length-1));
     }
   }
+  return fault1;
 }
 
 
@@ -92,22 +101,32 @@ class _FIFOState extends State<FIFO> {
 
 
   showAlertDialog(BuildContext context) {
+
     Widget cancelButton = FlatButton(
       child: Text("EXIT"),
-      onPressed:  () {
+      onPressed: () {
         Navigator.push(context, MaterialPageRoute(builder: (context)=> GetTextFieldValue()),);
         frame_capacity = 0;
         pagesEntryTextBox.text = '';
         pageCapacityTextBox.text = '';
         pages_arr.clear();
         toprint1.clear();
+        hit1 = 0;
+        fault1 = 0;
+        fault1_arr.clear();
+        hit1_arr.clear();
       },
     );
 
-    Widget continueButton = FlatButton(
-      child: Text("STAY"),
-      onPressed:  () {
-        return _FIFOState();
+    // Widget continueButton = FlatButton(
+    //   child: Text("STAY"),
+    //   onPressed: Navigator.pop(context)
+    // );
+
+    Widget graphButton = FlatButton(
+      child: Text("SHOW GRAPH"),
+      onPressed: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> GraphPage()),);
       },
     );
 
@@ -116,7 +135,8 @@ class _FIFOState extends State<FIFO> {
       content: Text("YOU HAVE REACHED END OF THE ALGORITHM WHAT WOULD YOU LIKE TO DO?"),
       actions: [
         cancelButton,
-        continueButton,
+        //continueButton,
+        graphButton,
       ],
     );
 
@@ -147,19 +167,27 @@ class _FIFOState extends State<FIFO> {
               padding: EdgeInsets.fromLTRB(8, 8, 8, 40),
               child : createTable(),
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: <Widget> [
-            //     Padding(
-            //       padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-            //       child : Text(hit1_arr.elementAt(1).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
-            //     ),
-            //     Padding(
-            //       padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-            //       child : Text(fault1_arr.elementAt(1).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
-            //     ),
-            //   ],
-            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget> [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(8, 20, 2, 8),
+                  child : Text('Page Hit : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.orange)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(2, 20, 60, 8),
+                  child : Text(hit1_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.orange)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 20, 2, 8),
+                  child : Text('Page Fault : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.orange)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(2, 20, 8, 8),
+                  child : Text(fault1_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.orange)),
+                ),
+              ],
+            ),
             Row (
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget> [

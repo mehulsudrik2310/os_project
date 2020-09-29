@@ -66,7 +66,6 @@ void optimalalgo(List<int> pages, int n, int capacity) {
     }
   }
   fault4 = n - hit4;
-
 }
 
 
@@ -131,6 +130,10 @@ class _OPTIMALState extends State<OPTIMAL> {
         pageCapacityTextBox.text = '';
         pages_arr.clear();
         toprint4.clear();
+        hit4 = 0;
+        fault4 = 0;
+        fault4_arr.clear();
+        hit4_arr.clear();
       },
     );
 

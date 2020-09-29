@@ -11,8 +11,8 @@ List <int> hit5_arr = new List();
 
 int randomalgo(List <int> pages, int n, int capacity) {
   List<int> s = new List();
-  int pagefault = 0;
-  int hit = 0;
+  int fault5 = 0;
+  int hit5 = 0;
   var j = new Random();
   for (int i = 0; i < n; i++) {
     List<int> s1 = new List();
@@ -26,17 +26,27 @@ int randomalgo(List <int> pages, int n, int capacity) {
           s1.add(null);
         }
         toprint5.add(s1);
-        pagefault++;
+        fault5++;
+        if(i==0) {
+          hit5_arr.add(0);
+        }
+        else {
+          hit5_arr.add(hit5_arr.elementAt(hit5_arr.length-1));
+        }
       }
-    } else {
+    }
+    else {
       if (s.contains(pages[i])) {
         s1.addAll(s);
         for (int j = 0; j < capacity - s.length; j++) {
           s1.add(null);
         }
         toprint5.add(s1);
-        hit++;
-      } else {
+        hit5++;
+        hit5_arr.add(hit5);
+        fault5_arr.add(fault5_arr.elementAt(fault5_arr.length-1));
+      }
+      else {
         s.removeAt(n);
         s.insert(n, pages[i]);
         s1.addAll(s);
@@ -44,12 +54,13 @@ int randomalgo(List <int> pages, int n, int capacity) {
           s1.add(null);
         }
         toprint5.add(s1);
-        pagefault++;
+        fault5++;
+        fault5_arr.add(fault5);
+        hit5_arr.add(hit5_arr.elementAt(hit5_arr.length-1));
       }
     }
   }
-  print(hit);
-  return pagefault;
+  return fault5;
 }
 
 
@@ -114,6 +125,10 @@ class _RANDOMState extends State<RANDOM> {
         pageCapacityTextBox.text = '';
         pages_arr.clear();
         toprint5.clear();
+        hit5 = 0;
+        fault5 = 0;
+        fault5_arr.clear();
+        hit5_arr.clear();
       },
     );
 
@@ -160,19 +175,19 @@ class _RANDOMState extends State<RANDOM> {
               padding: EdgeInsets.fromLTRB(8, 8, 8, 40),
               child : createTable(),
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: <Widget> [
-            //     Padding(
-            //       padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-            //       child : Text(hit1_arr.elementAt(1).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
-            //     ),
-            //     Padding(
-            //       padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-            //       child : Text(fault1_arr.elementAt(1).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
-            //     ),
-            //   ],
-            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget> [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                  child : Text(hit5_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                  child : Text(fault5_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
+                ),
+              ],
+            ),
             Row (
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget> [
