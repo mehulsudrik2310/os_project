@@ -79,6 +79,7 @@ class _graphpageState extends State<GraphPage> {
                 Tab(icon: Icon(FontAwesomeIcons.chartBar)),
               ],
             ),
+            centerTitle: true,
             title: Text('GRAPHICAL REPRESENTATION'),
           ),
           body: TabBarView(
@@ -89,7 +90,7 @@ class _graphpageState extends State<GraphPage> {
                   child: Center(
                     child: Column(
                       children: <Widget>[
-                        Text('BEALDYS ANAMOLY IN LINE GRAPH', style: GoogleFonts.montserrat(fontSize: 25.0, color: Colors.orange)),
+                        Text("BELADY'S ANOMALY IN LINE GRAPH", style: TextStyle(fontSize: 25.0, color: Colors.orange, fontWeight: FontWeight.bold)),
                         Expanded(
                           child: charts.LineChart(
                             beladysData,
@@ -119,7 +120,7 @@ class _graphpageState extends State<GraphPage> {
                   child: Center(
                     child: Column(
                       children: <Widget>[
-                        Text('BEALDYS ANAMOLY IN BAR GRAPH',style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold),),
+                        Text("BELADY'S ANOMALY IN BAR GRAPH",style: TextStyle(fontSize: 25.0, color: Colors.orange, fontWeight: FontWeight.bold),),
                         Expanded(
                           child: charts.BarChart(
                             _seriesData,
