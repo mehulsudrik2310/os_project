@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:os_project/homepage.dart';
 import 'package:os_project/inputpages.dart';
 
 int hit5 = 0;
@@ -27,6 +28,7 @@ int randomalgo(List <int> pages, int n, int capacity) {
         }
         toprint5.add(s1);
         fault5++;
+        fault5_arr.add(fault5);
         if(i==0) {
           hit5_arr.add(0);
         }
@@ -78,36 +80,36 @@ class _RANDOMState extends State<RANDOM> {
   Widget createTable() {
     List<TableRow> rows = [];
     rows.add(
-        TableRow(
-            children: <Widget> [
-              Text("Pages",style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange), textAlign: TextAlign.center,),
-            ]
-        )
+      TableRow(
+        children: <Widget> [
+          Text("Pages",style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange), textAlign: TextAlign.center,),
+        ]
+      )
     );
     for (int i = 0; i < frame_capacity; i++) {
       if(click == 0)
         rows.add(
-            TableRow(
-                children: <Widget> [
-                  Text(toprint5.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
-                ]
-            )
+          TableRow(
+            children: <Widget> [
+              Text(toprint5.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+            ]
+          )
         );
       else if(toprint5.elementAt(click-1).contains(toprint5.elementAt(click).elementAt(i)))
         rows.add(
-            TableRow(
-                children: <Widget> [
-                  Text(toprint5.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green), textAlign: TextAlign.center,),
-                ]
-            )
+          TableRow(
+            children: <Widget> [
+              Text(toprint5.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green), textAlign: TextAlign.center,),
+            ]
+          )
         );
       else{
         rows.add(
-            TableRow(
-                children: <Widget> [
-                  Text(toprint5.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
-                ]
-            )
+          TableRow(
+            children: <Widget> [
+              Text(toprint5.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+            ]
+          )
         );
       }
     }
@@ -119,7 +121,7 @@ class _RANDOMState extends State<RANDOM> {
     Widget cancelButton = FlatButton(
       child: Text("EXIT"),
       onPressed:  () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> GetTextFieldValue()),);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()),);
         frame_capacity = 0;
         pagesEntryTextBox.text = '';
         pageCapacityTextBox.text = '';
@@ -179,12 +181,20 @@ class _RANDOMState extends State<RANDOM> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget> [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                  child : Text(hit5_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
+                  padding: EdgeInsets.fromLTRB(8, 20, 2, 8),
+                  child : Text('Page Hit : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.green)),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                  child : Text(fault5_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
+                  padding: EdgeInsets.fromLTRB(2, 20, 60, 8),
+                  child : Text(hit5_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 20, 2, 8),
+                  child : Text('Page Fault : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.red)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(2, 20, 8, 8),
+                  child : Text(fault5_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red)),
                 ),
               ],
             ),
@@ -208,7 +218,6 @@ class _RANDOMState extends State<RANDOM> {
                 IconButton(
                   icon: Icon(Icons.arrow_forward),
                   onPressed: () {
-                    print(fault5_arr);
                     setState(() {
                       if(toprint5.length > click+1) {
                         click++;

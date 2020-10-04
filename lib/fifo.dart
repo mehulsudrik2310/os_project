@@ -135,7 +135,6 @@ class _FIFOState extends State<FIFO> {
       content: Text("YOU HAVE REACHED END OF THE ALGORITHM WHAT WOULD YOU LIKE TO DO?"),
       actions: [
         cancelButton,
-        //continueButton,
         graphButton,
       ],
     );
@@ -172,7 +171,7 @@ class _FIFOState extends State<FIFO> {
               children: <Widget> [
                 Padding(
                   padding: EdgeInsets.fromLTRB(8, 20, 2, 8),
-                  child : Text('Page Hit : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.orange)),
+                  child : Text('Page Hit : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.green)),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(2, 20, 60, 8),
@@ -180,7 +179,7 @@ class _FIFOState extends State<FIFO> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 20, 2, 8),
-                  child : Text('Page Fault : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.orange)),
+                  child : Text('Page Fault : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.red)),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(2, 20, 8, 8),

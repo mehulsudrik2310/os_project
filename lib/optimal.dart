@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:os_project/homepage.dart';
 import 'package:os_project/inputpages.dart';
 
 List<List> toprint4 = new List();
@@ -45,6 +46,7 @@ void optimalalgo(List<int> pages, int n, int capacity) {
       toprint4.add(s1);
       hit4++;
       hit4_arr.add(hit4);
+      fault4_arr.add(fault4_arr.elementAt(fault4_arr.length-1));
       continue;
     }
     if (fr.length < capacity) {
@@ -52,6 +54,14 @@ void optimalalgo(List<int> pages, int n, int capacity) {
       s1.addAll(fr);
       for (int j = 0; j < capacity - fr.length; j++) {
         s1.add(null);
+      }
+      fault4++;
+      fault4_arr.add(fault4);
+      if(i==0) {
+        hit4_arr.add(0);
+      }
+      else {
+        hit4_arr.add(hit4_arr.elementAt(hit4_arr.length-1));
       }
       toprint4.add(s1);
     } else {
@@ -63,6 +73,14 @@ void optimalalgo(List<int> pages, int n, int capacity) {
         s1.add(null);
       }
       toprint4.add(s1);
+      fault4++;
+      fault4_arr.add(fault4);
+      if(i==0) {
+        hit4_arr.add(0);
+      }
+      else {
+        hit4_arr.add(hit4_arr.elementAt(hit4_arr.length-1));
+      }
     }
   }
   fault4 = n - hit4;
@@ -83,36 +101,36 @@ class _OPTIMALState extends State<OPTIMAL> {
   Widget createTable() {
     List<TableRow> rows = [];
     rows.add(
-        TableRow(
-            children: <Widget> [
-              Text("Pages",style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange), textAlign: TextAlign.center,),
-            ]
-        )
+      TableRow(
+        children: <Widget> [
+          Text("Pages",style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange), textAlign: TextAlign.center,),
+        ]
+      )
     );
     for (int i = 0; i < frame_capacity; i++) {
       if(click == 0)
         rows.add(
-            TableRow(
-                children: <Widget> [
-                  Text(toprint4.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
-                ]
-            )
+          TableRow(
+            children: <Widget> [
+              Text(toprint4.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+            ]
+          )
         );
       else if(toprint4.elementAt(click-1).contains(toprint4.elementAt(click).elementAt(i)))
         rows.add(
-            TableRow(
-                children: <Widget> [
-                  Text(toprint4.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green), textAlign: TextAlign.center,),
-                ]
-            )
+          TableRow(
+            children: <Widget> [
+              Text(toprint4.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green), textAlign: TextAlign.center,),
+            ]
+          )
         );
       else{
         rows.add(
-            TableRow(
-                children: <Widget> [
-                  Text(toprint4.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
-                ]
-            )
+          TableRow(
+            children: <Widget> [
+              Text(toprint4.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+            ]
+          )
         );
       }
     }
@@ -124,7 +142,7 @@ class _OPTIMALState extends State<OPTIMAL> {
     Widget cancelButton = FlatButton(
       child: Text("EXIT"),
       onPressed:  () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> GetTextFieldValue()),);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()),);
         frame_capacity = 0;
         pagesEntryTextBox.text = '';
         pageCapacityTextBox.text = '';
@@ -180,19 +198,27 @@ class _OPTIMALState extends State<OPTIMAL> {
               padding: EdgeInsets.fromLTRB(8, 8, 8, 40),
               child : createTable(),
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: <Widget> [
-            //     Padding(
-            //       padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-            //       child : Text(hit1_arr.elementAt(1).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
-            //     ),
-            //     Padding(
-            //       padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-            //       child : Text(fault1_arr.elementAt(1).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
-            //     ),
-            //   ],
-            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget> [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(8, 20, 2, 8),
+                  child : Text('Page Hit : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.green)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(2, 20, 60, 8),
+                  child : Text(hit4_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 20, 2, 8),
+                  child : Text('Page Fault : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.red)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(2, 20, 8, 8),
+                  child : Text(fault4_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red)),
+                ),
+              ],
+            ),
             Row (
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget> [
@@ -213,7 +239,6 @@ class _OPTIMALState extends State<OPTIMAL> {
                 IconButton(
                   icon: Icon(Icons.arrow_forward),
                   onPressed: () {
-                    print(fault4_arr);
                     setState(() {
                       if(toprint4.length > click+1) {
                         click++;
@@ -233,4 +258,3 @@ class _OPTIMALState extends State<OPTIMAL> {
     );
   }
 }
-

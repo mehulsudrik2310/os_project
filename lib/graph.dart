@@ -2,8 +2,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:os_project/fifo.dart';
 import 'package:os_project/inputpages.dart';
+import 'package:os_project/fifo.dart';
 
 class GraphPage extends StatefulWidget {
   final Widget child;
@@ -35,7 +35,7 @@ class _graphpageState extends State<GraphPage> {
     beladysData.add(
       charts.Series(
         colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color(0xff990099)),
-        id: 'BEALDYS ANAMOLY',
+        id: 'BEALDYS ANOMALY',
         data: BeladyData,
         domainFn: (Belady belady, _) => belady.capacity,
         measureFn: (Belady belady, _) => belady.fault,
@@ -46,7 +46,7 @@ class _graphpageState extends State<GraphPage> {
       charts.Series(
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (Belady1 B, _) => charts.ColorUtil.fromDartColor(Color(0xff990099)),
-        id: 'BEALDYS ANAMOLY',
+        id: 'BEALDYS ANOMALY',
         data:  BeladyData1,
         domainFn: (Belady1 B, _) => B.capacity,
         measureFn: (Belady1 B, _) => B.fault,
@@ -68,19 +68,19 @@ class _graphpageState extends State<GraphPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Color(0xff1976d2),
             bottom: TabBar(
               indicatorColor: Color(0xff9962D0),
               tabs: [
+                Tab(icon: Icon(FontAwesomeIcons.book)),
                 Tab(icon: Icon(FontAwesomeIcons.chartLine)),
                 Tab(icon: Icon(FontAwesomeIcons.chartBar)),
               ],
             ),
-            centerTitle: true,
-            title: Text('GRAPHICAL REPRESENTATION'),
+            title: Text('GRAPHICAL REPRESENTATION', textAlign: TextAlign.center,),
           ),
           body: TabBarView(
             children: [
@@ -89,8 +89,21 @@ class _graphpageState extends State<GraphPage> {
                 child: Container(
                   child: Center(
                     child: Column(
+                      children: [
+                        Text('Bélády’s anomaly is the name given to the phenomenon where increasing the number of page frames results in an increase in the number of page faults for a given memory access pattern.This phenomenon is commonly experienced in FIFO ALGORITHM',
+                            style: GoogleFonts.montserrat(fontSize: 25.0, color: Colors.orange))
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Container(
+                  child: Center(
+                    child: Column(
                       children: <Widget>[
-                        Text("BELADY'S ANOMALY IN LINE GRAPH", style: TextStyle(fontSize: 25.0, color: Colors.orange, fontWeight: FontWeight.bold)),
+                        Text('BEALDYS ANOMALY IN LINE GRAPH', style: GoogleFonts.montserrat(fontSize: 25.0, color: Colors.orange)),
                         Expanded(
                           child: charts.LineChart(
                             beladysData,
@@ -120,7 +133,7 @@ class _graphpageState extends State<GraphPage> {
                   child: Center(
                     child: Column(
                       children: <Widget>[
-                        Text("BELADY'S ANOMALY IN BAR GRAPH",style: TextStyle(fontSize: 25.0, color: Colors.orange, fontWeight: FontWeight.bold),),
+                        Text('BEALDYS ANOMALY IN BAR GRAPH',style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold),),
                         Expanded(
                           child: charts.BarChart(
                             _seriesData,

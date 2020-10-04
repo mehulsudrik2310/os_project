@@ -57,36 +57,36 @@ class _LIFOState extends State<LIFO> {
   Widget createTable() {
     List<TableRow> rows = [];
     rows.add(
-        TableRow(
-            children: <Widget> [
-              Text("Pages",style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange), textAlign: TextAlign.center,),
-            ]
-        )
+      TableRow(
+        children: <Widget> [
+          Text("Pages",style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange), textAlign: TextAlign.center,),
+        ]
+      )
     );
     for (int i = 0; i < frame_capacity; i++) {
       if(click == 0)
         rows.add(
-            TableRow(
-                children: <Widget> [
-                  Text(toprint2.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
-                ]
-            )
+          TableRow(
+            children: <Widget> [
+              Text(toprint2.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+            ]
+          )
         );
       else if(toprint2.elementAt(click-1).contains(toprint2.elementAt(click).elementAt(i)))
         rows.add(
-            TableRow(
-                children: <Widget> [
-                  Text(toprint2.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green), textAlign: TextAlign.center,),
-                ]
-            )
+          TableRow(
+            children: <Widget> [
+              Text(toprint2.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green), textAlign: TextAlign.center,),
+            ]
+          )
         );
       else{
         rows.add(
-            TableRow(
-                children: <Widget> [
-                  Text(toprint2.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
-                ]
-            )
+          TableRow(
+            children: <Widget> [
+              Text(toprint2.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+            ]
+          )
         );
       }
     }
@@ -158,12 +158,20 @@ class _LIFOState extends State<LIFO> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget> [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                  child : Text(hit2_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
+                  padding: EdgeInsets.fromLTRB(8, 20, 2, 8),
+                  child : Text('Page Hit : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.green)),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                  child : Text(fault2_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange)),
+                  padding: EdgeInsets.fromLTRB(2, 20, 60, 8),
+                  child : Text(hit2_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.orange)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 20, 2, 8),
+                  child : Text('Page Fault : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.red)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(2, 20, 8, 8),
+                  child : Text(fault2_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.orange)),
                 ),
               ],
             ),
