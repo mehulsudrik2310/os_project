@@ -1,81 +1,81 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:os_project/homepage.dart';
-import 'package:os_project/inputpages.dart';
+import 'package:os_project/ui pages/homepage.dart';
+import 'package:os_project/ui pages/inputpages.dart';
 
-int hit5 = 0;
-int fault5 = 0;
-List <List> toprint5 = new List();
-List <int> fault5_arr = new List();
-List <int> hit5_arr = new List();
+List<List> toprint3 = new List();
+int fault3 = 0;
+int hit3 = 0;
+List <int> fault3_arr = new List();
+List <int> hit3_arr = new List();
 
-int randomalgo(List <int> pages, int n, int capacity) {
-  List<int> s = new List();
-  int fault5 = 0;
-  int hit5 = 0;
-  var j = new Random();
+int lrualgo(List<int> pages, int n, int capacity) {
+  List <int> frame = new List();
+  List <int> st = new List();
   for (int i = 0; i < n; i++) {
-    List<int> s1 = new List();
-    int n = j.nextInt(capacity);
-    if (s.length < capacity) {
-      if (!s.contains(pages[i])) {
-        print(s);
-        s.add(pages[i]);
-        s1.addAll(s);
-        for (int j = 0; j < capacity - s.length; j++) {
-          s1.add(null);
+    List <int> s1 = new List();
+    if (!frame.contains(pages[i])) {
+      if (frame.length < capacity) {
+        frame.add(pages[i]);
+        st.add((frame.length) - 1);
+        if (frame.length <= capacity) {
+          s1.addAll(frame);
+          for (int j = 0; j < (capacity - frame.length); j++) {
+            s1.add(null);
+          }
+          toprint3.add(s1);
+          fault3 ++;
+          fault3_arr.add(fault3);
+          if(i==0) {
+            hit3_arr.add(0);
+          }
+          else {
+            hit3_arr.add(hit3_arr.elementAt(hit3_arr.length-1));
+          }
         }
-        toprint5.add(s1);
-        fault5++;
-        fault5_arr.add(fault5);
-        if(i==0) {
-          hit5_arr.add(0);
-        }
-        else {
-          hit5_arr.add(hit5_arr.elementAt(hit5_arr.length-1));
-        }
+      }
+      else {
+        int ind = st.removeAt(0);
+
+        frame[ind] = pages[i];
+
+        st.add(ind);
+        s1.addAll(frame);
+        toprint3.add(s1);
+        fault3 ++;
+        fault3_arr.add(fault3);
+        hit3_arr.add(hit3_arr.elementAt(hit3_arr.length-1));
       }
     }
     else {
-      if (s.contains(pages[i])) {
-        s1.addAll(s);
-        for (int j = 0; j < capacity - s.length; j++) {
+      st.add(st.removeAt(st.indexOf(frame.indexOf(pages[i]))));
+      if (frame.length <= capacity) {
+        s1.addAll(frame);
+        for (int j = 0; j < (capacity - frame.length); j++) {
           s1.add(null);
         }
-        toprint5.add(s1);
-        hit5++;
-        hit5_arr.add(hit5);
-        fault5_arr.add(fault5_arr.elementAt(fault5_arr.length-1));
-      }
-      else {
-        s.removeAt(n);
-        s.insert(n, pages[i]);
-        s1.addAll(s);
-        for (int j = 0; j < capacity - s.length; j++) {
-          s1.add(null);
-        }
-        toprint5.add(s1);
-        fault5++;
-        fault5_arr.add(fault5);
-        hit5_arr.add(hit5_arr.elementAt(hit5_arr.length-1));
-      }
+      } else
+        s1.addAll(frame);
+      toprint3.add(s1);
+      hit3++;
+      hit3_arr.add(hit3);
+      fault3_arr.add(fault3_arr.elementAt(fault3_arr.length-1));
     }
   }
-  return fault5;
+  return fault3;
 }
 
 
-class RANDOM extends StatefulWidget {
+class LRU extends StatefulWidget {
   @override
-  _RANDOMState createState() => _RANDOMState();
+  _LRUState createState() => _LRUState();
 }
 
-class _RANDOMState extends State<RANDOM> {
+class _LRUState extends State<LRU> {
 
   int click = 0;
   int pclick = 1;
-  final int length = toprint5.length;
+  final int length = toprint3.length;
 
   Widget createTable() {
     List<TableRow> rows = [];
@@ -91,15 +91,15 @@ class _RANDOMState extends State<RANDOM> {
         rows.add(
           TableRow(
             children: <Widget> [
-              Text(toprint5.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+              Text(toprint3.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
             ]
           )
         );
-      else if(toprint5.elementAt(click-1).contains(toprint5.elementAt(click).elementAt(i)))
+      else if(toprint3.elementAt(click-1).contains(toprint3.elementAt(click).elementAt(i)))
         rows.add(
           TableRow(
             children: <Widget> [
-              Text(toprint5.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green), textAlign: TextAlign.center,),
+              Text(toprint3.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green), textAlign: TextAlign.center,),
             ]
           )
         );
@@ -107,8 +107,8 @@ class _RANDOMState extends State<RANDOM> {
         rows.add(
           TableRow(
             children: <Widget> [
-              Text(toprint5.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
-            ]
+              Text(toprint3.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+              ]
           )
         );
       }
@@ -126,18 +126,18 @@ class _RANDOMState extends State<RANDOM> {
         pagesEntryTextBox.text = '';
         pageCapacityTextBox.text = '';
         pages_arr.clear();
-        toprint5.clear();
-        hit5 = 0;
-        fault5 = 0;
-        fault5_arr.clear();
-        hit5_arr.clear();
+        toprint3.clear();
+        hit3 = 0;
+        fault3 = 0;
+        fault3_arr.clear();
+        hit3_arr.clear();
       },
     );
 
     Widget continueButton = FlatButton(
       child: Text("STAY"),
       onPressed:  () {
-        return _RANDOMState();
+        return _LRUState();
       },
     );
 
@@ -186,7 +186,7 @@ class _RANDOMState extends State<RANDOM> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(2, 20, 60, 8),
-                  child : Text(hit5_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green)),
+                  child : Text(hit3_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green)),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 20, 2, 8),
@@ -194,7 +194,7 @@ class _RANDOMState extends State<RANDOM> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(2, 20, 8, 8),
-                  child : Text(fault5_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red)),
+                  child : Text(fault3_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red)),
                 ),
               ],
             ),
@@ -219,7 +219,7 @@ class _RANDOMState extends State<RANDOM> {
                   icon: Icon(Icons.arrow_forward),
                   onPressed: () {
                     setState(() {
-                      if(toprint5.length > click+1) {
+                      if(toprint3.length > click+1) {
                         click++;
                         pclick++;
                       }

@@ -1,102 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:os_project/homepage.dart';
-import 'package:os_project/inputpages.dart';
+import 'package:os_project/ui pages/inputpages.dart';
 
-List<List> toprint4 = new List();
-int hit4 = 0;
-int fault4 = 0;
-List <int> fault4_arr = new List();
-List <int> hit4_arr = new List();
+int hit2 = 0;
+int fault2 = 0;
+List <List> toprint2 = new List();
+List <int> fault2_arr = new List();
+List <int> hit2_arr = new List();
 
-bool search(int key, List<int> fr) {
-  for (int i = 0; i < fr.length; i++) {
-    if (fr.elementAt(i) == key) return true;
-  }
-  return false;
-}
+int lifoalgo(List<int> pages, int n, int capacity) {
+  int frameSize = capacity;
+  int position = -1;
+  List <int> frame = new List(frameSize);
+  int i = 0;
 
-int predict(List<int> pages, List<int> fr, int n, int index) {
-  int res = -1, farthest = index;
-  for (int i = 0; i < fr.length; i++) {
-    int j;
-    for (j = index; j < n; j++) {
-      if (fr.elementAt(i) == pages.elementAt(j)) {
-        if (j > farthest) {
-          farthest = j;
-          res = i;
-        }
-        break;
-      }
-    }
-    if (j == n) return i;
-  }
-  return (res == -1) ? 0 : res;
-}
-
-void optimalalgo(List<int> pages, int n, int capacity) {
-  List <int> fr = new List();
-  for (int i = 0; i < n; i++) {
+  for (i = 0; i < n; i++) {
     List <int> s1 = new List();
-    if (search(pages.elementAt(i), fr)) {
-      s1.addAll(fr);
-      for (int j = 0; j < capacity - fr.length; j++) {
-        s1.add(null);
+    if (!(frame.contains(pages[i]))) {
+      position++;
+      if (position > (frameSize - 1)) position = capacity - 1;
+      frame[position] = pages[i];
+      s1.addAll(frame);
+      toprint2.add(s1);
+      fault2++;
+      fault2_arr.add(fault2);
+      if(i==0) {
+        hit2_arr.add(0);
       }
-      toprint4.add(s1);
-      hit4++;
-      hit4_arr.add(hit4);
-      fault4_arr.add(fault4_arr.elementAt(fault4_arr.length-1));
-      continue;
+      else {
+        hit2_arr.add(hit2_arr.elementAt(hit2_arr.length-1));
+      }
     }
-    if (fr.length < capacity) {
-      fr.add(pages.elementAt(i));
-      s1.addAll(fr);
-      for (int j = 0; j < capacity - fr.length; j++) {
-        s1.add(null);
-      }
-      fault4++;
-      fault4_arr.add(fault4);
-      if(i==0) {
-        hit4_arr.add(0);
-      }
-      else {
-        hit4_arr.add(hit4_arr.elementAt(hit4_arr.length-1));
-      }
-      toprint4.add(s1);
-    } else {
-      int j = predict(pages, fr, n, i + 1);
-      fr.removeAt(j);
-      fr.insert(j, pages.elementAt(i));
-      s1.addAll(fr);
-      for (int j = 0; j < capacity - fr.length; j++) {
-        s1.add(null);
-      }
-      toprint4.add(s1);
-      fault4++;
-      fault4_arr.add(fault4);
-      if(i==0) {
-        hit4_arr.add(0);
-      }
-      else {
-        hit4_arr.add(hit4_arr.elementAt(hit4_arr.length-1));
-      }
+    else if (frame.contains(pages[i])) {
+      s1.addAll(frame);
+      toprint2.add(s1);
+      hit2++;
+      hit2_arr.add(hit2);
+      fault2_arr.add(fault2_arr.elementAt(fault2_arr.length-1));
     }
   }
-  fault4 = n - hit4;
+  return fault2;
 }
 
 
-class OPTIMAL extends StatefulWidget {
+class LIFO extends StatefulWidget {
   @override
-  _OPTIMALState createState() => _OPTIMALState();
+  _LIFOState createState() => _LIFOState();
 }
 
-class _OPTIMALState extends State<OPTIMAL> {
+class _LIFOState extends State<LIFO> {
 
   int click = 0;
   int pclick = 1;
-  final int length = toprint4.length;
+  final int length = toprint2.length;
 
   Widget createTable() {
     List<TableRow> rows = [];
@@ -112,15 +68,15 @@ class _OPTIMALState extends State<OPTIMAL> {
         rows.add(
           TableRow(
             children: <Widget> [
-              Text(toprint4.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+              Text(toprint2.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
             ]
           )
         );
-      else if(toprint4.elementAt(click-1).contains(toprint4.elementAt(click).elementAt(i)))
+      else if(toprint2.elementAt(click-1).contains(toprint2.elementAt(click).elementAt(i)))
         rows.add(
           TableRow(
             children: <Widget> [
-              Text(toprint4.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green), textAlign: TextAlign.center,),
+              Text(toprint2.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green), textAlign: TextAlign.center,),
             ]
           )
         );
@@ -128,7 +84,7 @@ class _OPTIMALState extends State<OPTIMAL> {
         rows.add(
           TableRow(
             children: <Widget> [
-              Text(toprint4.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+              Text(toprint2.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
             ]
           )
         );
@@ -142,23 +98,23 @@ class _OPTIMALState extends State<OPTIMAL> {
     Widget cancelButton = FlatButton(
       child: Text("EXIT"),
       onPressed:  () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()),);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> GetTextFieldValue()),);
         frame_capacity = 0;
         pagesEntryTextBox.text = '';
         pageCapacityTextBox.text = '';
         pages_arr.clear();
-        toprint4.clear();
-        hit4 = 0;
-        fault4 = 0;
-        fault4_arr.clear();
-        hit4_arr.clear();
+        toprint2.clear();
+        hit2 = 0;
+        fault2 = 0;
+        fault2_arr.clear();
+        hit2_arr.clear();
       },
     );
 
     Widget continueButton = FlatButton(
       child: Text("STAY"),
       onPressed:  () {
-        return _OPTIMALState();
+        return _LIFOState();
       },
     );
 
@@ -207,7 +163,7 @@ class _OPTIMALState extends State<OPTIMAL> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(2, 20, 60, 8),
-                  child : Text(hit4_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green)),
+                  child : Text(hit2_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.green)),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 20, 2, 8),
@@ -215,7 +171,7 @@ class _OPTIMALState extends State<OPTIMAL> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(2, 20, 8, 8),
-                  child : Text(fault4_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red)),
+                  child : Text(fault2_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.red)),
                 ),
               ],
             ),
@@ -239,8 +195,9 @@ class _OPTIMALState extends State<OPTIMAL> {
                 IconButton(
                   icon: Icon(Icons.arrow_forward),
                   onPressed: () {
+                    print(fault2_arr);
                     setState(() {
-                      if(toprint4.length > click+1) {
+                      if(toprint2.length > click+1) {
                         click++;
                         pclick++;
                       }
@@ -258,3 +215,4 @@ class _OPTIMALState extends State<OPTIMAL> {
     );
   }
 }
+

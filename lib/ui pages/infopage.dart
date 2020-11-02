@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:os_project/inputpages.dart';
-import 'package:os_project/pages.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:os_project/ui pages/inputpages.dart';
+import 'package:os_project/pages.dart';
 
 int signal = 0;
 

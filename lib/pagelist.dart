@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:os_project/infopage.dart';
-import 'package:os_project/pages.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:os_project/pages.dart';
+import 'package:os_project/ui pages/infopage.dart';
 
 class PageList extends StatefulWidget {
   @override

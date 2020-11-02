@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:os_project/fifo.dart';
-import 'package:os_project/infopage.dart';
-import 'package:os_project/lifo.dart';
-import 'package:os_project/lru.dart';
-import 'package:os_project/optimal.dart';
-import 'package:os_project/random.dart';
+import 'package:os_project/ui pages/infopage.dart';
+import 'package:os_project/algorithms/fifo.dart';
+import 'package:os_project/algorithms/lifo.dart';
+import 'package:os_project/algorithms/lru.dart';
+import 'package:os_project/algorithms/optimal.dart';
+import 'package:os_project/algorithms/random.dart';
 
 final pagesEntryTextBox = TextEditingController();
 final pageCapacityTextBox = TextEditingController();

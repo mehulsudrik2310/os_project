@@ -1,72 +1,89 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:os_project/graph.dart';
-import 'package:os_project/inputpages.dart';
+import 'package:os_project/ui pages/homepage.dart';
+import 'package:os_project/ui pages/inputpages.dart';
 
-int hit1 = 0;
-int fault1 = 0;
-List <List> toprint1 = new List();
-List <int> fault1_arr = new List();
-List <int> hit1_arr = new List();
+int hit5 = 0;
+int fault5 = 0;
+List <List> toprint5 = new List();
+List <int> fault5_arr = new List();
+List <int> hit5_arr = new List();
 
-
-int fifoalgo(List<int> pages, int n, int capacity) {
-  int frameSize = capacity;
-  int position = -1;
-  List <int> frame =  new List(frameSize);
-  int i = 0;
-
-  for(i=0;i<n;i++)
-  {
-    List <int> s1 = new List();
-    if(!(frame.contains(pages[i])))
-    {
-      position++;
-      if(position>(frameSize-1))
-        position=0;
-      frame[position] = pages[i];
-      s1.addAll(frame);
-      toprint1.add(s1);
-      fault1++;
-      fault1_arr.add(fault1);
-      if(i==0) {
-        hit1_arr.add(0);
+int randomalgo(List <int> pages, int n, int capacity) {
+  List<int> s = new List();
+  int fault5 = 0;
+  int hit5 = 0;
+  var j = new Random();
+  for (int i = 0; i < n; i++) {
+    List<int> s1 = new List();
+    int n = j.nextInt(capacity);
+    if (s.length < capacity) {
+      if (!s.contains(pages[i])) {
+        print(s);
+        s.add(pages[i]);
+        s1.addAll(s);
+        for (int j = 0; j < capacity - s.length; j++) {
+          s1.add(null);
+        }
+        toprint5.add(s1);
+        fault5++;
+        fault5_arr.add(fault5);
+        if(i==0) {
+          hit5_arr.add(0);
+        }
+        else {
+          hit5_arr.add(hit5_arr.elementAt(hit5_arr.length-1));
+        }
+      }
+    }
+    else {
+      if (s.contains(pages[i])) {
+        s1.addAll(s);
+        for (int j = 0; j < capacity - s.length; j++) {
+          s1.add(null);
+        }
+        toprint5.add(s1);
+        hit5++;
+        hit5_arr.add(hit5);
+        fault5_arr.add(fault5_arr.elementAt(fault5_arr.length-1));
       }
       else {
-        hit1_arr.add(hit1_arr.elementAt(hit1_arr.length-1));
+        s.removeAt(n);
+        s.insert(n, pages[i]);
+        s1.addAll(s);
+        for (int j = 0; j < capacity - s.length; j++) {
+          s1.add(null);
+        }
+        toprint5.add(s1);
+        fault5++;
+        fault5_arr.add(fault5);
+        hit5_arr.add(hit5_arr.elementAt(hit5_arr.length-1));
       }
     }
-    else if(frame.contains(pages[i]))
-    {
-      s1.addAll(frame);
-      toprint1.add(s1);
-      hit1++;
-      hit1_arr.add(hit1);
-      fault1_arr.add(fault1_arr.elementAt(fault1_arr.length-1));
-    }
   }
-  return fault1;
+  return fault5;
 }
 
 
-class FIFO extends StatefulWidget {
+class RANDOM extends StatefulWidget {
   @override
-  _FIFOState createState() => _FIFOState();
+  _RANDOMState createState() => _RANDOMState();
 }
 
-class _FIFOState extends State<FIFO> {
+class _RANDOMState extends State<RANDOM> {
 
   int click = 0;
   int pclick = 1;
-  final int length = toprint1.length;
+  final int length = toprint5.length;
 
   Widget createTable() {
     List<TableRow> rows = [];
     rows.add(
       TableRow(
-          children: <Widget> [
-            Text("Pages",style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange), textAlign: TextAlign.center,),
-          ]
+        children: <Widget> [
+          Text("Pages",style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange), textAlign: TextAlign.center,),
+        ]
       )
     );
     for (int i = 0; i < frame_capacity; i++) {
@@ -74,15 +91,15 @@ class _FIFOState extends State<FIFO> {
         rows.add(
           TableRow(
             children: <Widget> [
-              Text(toprint1.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+              Text(toprint5.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
             ]
           )
         );
-      else if(toprint1.elementAt(click-1).contains(toprint1.elementAt(click).elementAt(i)))
+      else if(toprint5.elementAt(click-1).contains(toprint5.elementAt(click).elementAt(i)))
         rows.add(
           TableRow(
             children: <Widget> [
-              Text(toprint1.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green), textAlign: TextAlign.center,),
+              Text(toprint5.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green), textAlign: TextAlign.center,),
             ]
           )
         );
@@ -90,7 +107,7 @@ class _FIFOState extends State<FIFO> {
         rows.add(
           TableRow(
             children: <Widget> [
-              Text(toprint1.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
+              Text(toprint5.elementAt(click).elementAt(i).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red), textAlign: TextAlign.center,),
             ]
           )
         );
@@ -101,32 +118,26 @@ class _FIFOState extends State<FIFO> {
 
 
   showAlertDialog(BuildContext context) {
-
     Widget cancelButton = FlatButton(
       child: Text("EXIT"),
-      onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> GetTextFieldValue()),);
+      onPressed:  () {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()),);
         frame_capacity = 0;
         pagesEntryTextBox.text = '';
         pageCapacityTextBox.text = '';
         pages_arr.clear();
-        toprint1.clear();
-        hit1 = 0;
-        fault1 = 0;
-        fault1_arr.clear();
-        hit1_arr.clear();
+        toprint5.clear();
+        hit5 = 0;
+        fault5 = 0;
+        fault5_arr.clear();
+        hit5_arr.clear();
       },
     );
 
-    // Widget continueButton = FlatButton(
-    //   child: Text("STAY"),
-    //   onPressed: Navigator.pop(context)
-    // );
-
-    Widget graphButton = FlatButton(
-      child: Text("SHOW GRAPH"),
-      onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> GraphPage()),);
+    Widget continueButton = FlatButton(
+      child: Text("STAY"),
+      onPressed:  () {
+        return _RANDOMState();
       },
     );
 
@@ -135,7 +146,7 @@ class _FIFOState extends State<FIFO> {
       content: Text("YOU HAVE REACHED END OF THE ALGORITHM WHAT WOULD YOU LIKE TO DO?"),
       actions: [
         cancelButton,
-        graphButton,
+        continueButton,
       ],
     );
 
@@ -155,8 +166,8 @@ class _FIFOState extends State<FIFO> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget> [
             Padding(
-              padding: EdgeInsets.fromLTRB(8, 8, 8, 10),
-              child : Text('Click on arrows to see sets', style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange))
+                padding: EdgeInsets.fromLTRB(8, 8, 8, 10),
+                child : Text('Click on arrows to see sets', style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange))
             ),
             Padding(
                 padding: EdgeInsets.fromLTRB(8, 8, 8, 40),
@@ -175,7 +186,7 @@ class _FIFOState extends State<FIFO> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(2, 20, 60, 8),
-                  child : Text(hit1_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.green)),
+                  child : Text(hit5_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.green)),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 20, 2, 8),
@@ -183,7 +194,7 @@ class _FIFOState extends State<FIFO> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(2, 20, 8, 8),
-                  child : Text(fault1_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.red)),
+                  child : Text(fault5_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.red)),
                 ),
               ],
             ),
@@ -208,7 +219,7 @@ class _FIFOState extends State<FIFO> {
                   icon: Icon(Icons.arrow_forward),
                   onPressed: () {
                     setState(() {
-                      if(toprint1.length > click+1) {
+                      if(toprint5.length > click+1) {
                         click++;
                         pclick++;
                       }
@@ -226,4 +237,3 @@ class _FIFOState extends State<FIFO> {
     );
   }
 }
-

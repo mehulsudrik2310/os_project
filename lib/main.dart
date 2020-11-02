@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:os_project/loadingpage.dart';
+import 'package:os_project/ui pages/loadingpage.dart';
 
 void main () =>runApp(OSProject());
 

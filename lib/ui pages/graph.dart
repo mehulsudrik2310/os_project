@@ -1,9 +1,9 @@
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:os_project/fifo.dart';
-import 'package:os_project/inputpages.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:os_project/algorithms/fifo.dart';
+import 'package:os_project/ui pages/inputpages.dart';
 
 class GraphPage extends StatefulWidget {
   final Widget child;
