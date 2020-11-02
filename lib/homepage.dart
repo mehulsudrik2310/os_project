@@ -17,13 +17,6 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         padding: EdgeInsets.all(20),
-        /*decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("images/logo.png"),
-              fit: BoxFit.fitWidth,
-              alignment: Alignment.topLeft
-          ),
-        ),*/
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:os_project/homepage.dart';
+import 'package:os_project/loadingpage.dart';
 
 void main () =>runApp(OSProject());
 
@@ -9,7 +9,7 @@ class OSProject extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'OS_Project',
-      home: HomePage(),
+      home: LoadingPage(),
     );
   }
 }

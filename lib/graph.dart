@@ -2,8 +2,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:os_project/inputpages.dart';
 import 'package:os_project/fifo.dart';
+import 'package:os_project/inputpages.dart';
 
 class GraphPage extends StatefulWidget {
   final Widget child;
@@ -35,7 +35,7 @@ class _graphpageState extends State<GraphPage> {
     beladysData.add(
       charts.Series(
         colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color(0xff990099)),
-        id: 'BEALDYS ANOMALY',
+        id: 'BELADYS ANOMALY',
         data: BeladyData,
         domainFn: (Belady belady, _) => belady.capacity,
         measureFn: (Belady belady, _) => belady.fault,
@@ -46,7 +46,7 @@ class _graphpageState extends State<GraphPage> {
       charts.Series(
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (Belady1 B, _) => charts.ColorUtil.fromDartColor(Color(0xff990099)),
-        id: 'BEALDYS ANOMALY',
+        id: 'BELADYS ANOMALY',
         data:  BeladyData1,
         domainFn: (Belady1 B, _) => B.capacity,
         measureFn: (Belady1 B, _) => B.fault,
@@ -103,7 +103,7 @@ class _graphpageState extends State<GraphPage> {
                   child: Center(
                     child: Column(
                       children: <Widget>[
-                        Text('BEALDYS ANOMALY IN LINE GRAPH', style: GoogleFonts.montserrat(fontSize: 25.0, color: Colors.orange)),
+                        Text("BELADY'S ANOMALY IN LINE GRAPH", style: GoogleFonts.montserrat(fontSize: 25.0, color: Colors.orange)),
                         Expanded(
                           child: charts.LineChart(
                             beladysData,
@@ -133,7 +133,7 @@ class _graphpageState extends State<GraphPage> {
                   child: Center(
                     child: Column(
                       children: <Widget>[
-                        Text('BEALDYS ANOMALY IN BAR GRAPH',style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold),),
+                        Text("BELADY'S ANOMALY IN BAR GRAPH",style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold),),
                         Expanded(
                           child: charts.BarChart(
                             _seriesData,
@@ -158,13 +158,11 @@ class _graphpageState extends State<GraphPage> {
 class Belady{
   int capacity;
   int fault;
-
   Belady(this.capacity, this.fault);
 }
 
 class Belady1{
   String capacity;
   int fault;
-
   Belady1(this.capacity, this.fault);
 }

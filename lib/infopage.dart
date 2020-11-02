@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:os_project/pages.dart';
 import 'package:os_project/inputpages.dart';
+import 'package:os_project/pages.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 int signal = 0;
 
@@ -30,44 +32,53 @@ class Info extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text(pages.title ,style: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal ))),
+      ),
+        //extendBodyBehindAppBar: true,
+      body: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            // ClipRRect(
+            //     child: Image.asset(
+            //       'images/${pages.img}',
+            //       height: 200,
+            //       fit: BoxFit.fill,
+            //       alignment: Alignment.topCenter,
+            //     )
+            // ),
+            // SizedBox(height: 30),
+            // // ListTile(
+            // //     title: Text(pages.title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.grey[800])),
+            // // ),
+            Center(
+              child: Text('Theory', style: GoogleFonts.roboto(textStyle: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w700, fontStyle: FontStyle.normal)),),
+              ),
+            Padding(
+              padding: EdgeInsets.all(20),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 250,
+                child: Text(pages.info, style: GoogleFonts.roboto(textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal)),
+                ),
+              ),
+            ),
+          ],
         ),
-        extendBodyBehindAppBar: true,
-        body: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              ClipRRect(
-                  child: Image.asset(
-                    'images/${pages.img}',
-                    height: 200,
-                    fit: BoxFit.fill,
-                    alignment: Alignment.topCenter,
-                  )
-              ),
-              SizedBox(height: 30),
-              ListTile(
-                  title: Text(pages.title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.grey[800])),
-              ),
-              Padding(
-                padding: EdgeInsets.all(20),
-              ),
-              SizedBox(
-                  height: 250,
-                  child: Text(pages.info, style: TextStyle(fontSize: 30),)
-              ),
-              RaisedButton(
-                child: Text('Go to input pages',style: TextStyle(fontSize: 20,color: Colors.green),),
-                onPressed:() {
-                  check();
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>GetTextFieldValue()),);
-                  },
-              ),
-            ],
-          ),
-        )
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed:() {
+          check();
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>GetTextFieldValue()),);
+        },
+        backgroundColor: Colors.orange,
+        label: Text('Go to Input'),
+        icon: Icon(Icons.input),
+      )
     );
   }
 }

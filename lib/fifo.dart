@@ -175,7 +175,7 @@ class _FIFOState extends State<FIFO> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(2, 20, 60, 8),
-                  child : Text(hit1_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.orange)),
+                  child : Text(hit1_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.green)),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 20, 2, 8),
@@ -183,7 +183,7 @@ class _FIFOState extends State<FIFO> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(2, 20, 8, 8),
-                  child : Text(fault1_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.orange)),
+                  child : Text(fault1_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.red)),
                 ),
               ],
             ),
@@ -207,7 +207,6 @@ class _FIFOState extends State<FIFO> {
                 IconButton(
                   icon: Icon(Icons.arrow_forward),
                   onPressed: () {
-                    print(fault1_arr);
                     setState(() {
                       if(toprint1.length > click+1) {
                         click++;
