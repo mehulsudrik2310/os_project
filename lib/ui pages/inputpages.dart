@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:os_project/ui pages/infopage.dart';
 import 'package:os_project/algorithms/fifo.dart';
 import 'package:os_project/algorithms/lifo.dart';
@@ -222,7 +221,7 @@ class _GetTextFieldValueState extends State<GetTextFieldValue> {
                     child: Row(
                       children: <Widget>[
                         Icon(
-                          MdiIcons.calculator,
+                          Icons.calculate,
                           color: Colors.white,
                         ),
                         Text(
