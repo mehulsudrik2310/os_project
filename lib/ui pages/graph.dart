@@ -90,8 +90,7 @@ class _graphpageState extends State<GraphPage> {
                   child: Center(
                     child: Column(
                       children: [
-                        Text('Bélády’s anomaly is the name given to the phenomenon where increasing the number of page frames results in an increase in the number of page faults for a given memory access pattern.This phenomenon is commonly experienced in FIFO ALGORITHM',
-                            style: GoogleFonts.montserrat(fontSize: 25.0, color: Colors.orange))
+                        Text('Bélády’s anomaly is the name given to the phenomenon where increasing the number of page frames results in an increase in the number of page faults for a given memory access pattern.This phenomenon is commonly experienced in FIFO ALGORITHM', style: GoogleFonts.roboto(fontSize: 18.0, color: Colors.orange))
                       ],
                     ),
                   ),

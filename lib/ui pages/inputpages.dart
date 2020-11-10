@@ -194,7 +194,8 @@ class _GetTextFieldValueState extends State<GetTextFieldValue> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => FIFO()),);
                         }
                         if (signal == 2) {
-                          lifoalgo(pages_arr, pages_arr.length, frame_capacity);Navigator.push(context, MaterialPageRoute(builder: (context) => LIFO()),
+                          lifoalgo(pages_arr, pages_arr.length, frame_capacity);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => LIFO()),
                           );
                         }
                         if (signal == 3) {
@@ -202,8 +203,7 @@ class _GetTextFieldValueState extends State<GetTextFieldValue> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => LRU()),);
                         }
                         if (signal == 4) {
-                          optimalalgo(
-                              pages_arr, pages_arr.length, frame_capacity);
+                          optimalalgo(pages_arr, pages_arr.length, frame_capacity);
                           Navigator.push(context, MaterialPageRoute(builder: (context) => OPTIMAL()),);
                         }
                         if (signal == 5) {

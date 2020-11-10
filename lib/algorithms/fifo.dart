@@ -5,6 +5,7 @@ import 'package:os_project/ui pages/graph.dart';
 
 int hit1 = 0;
 int fault1 = 0;
+
 List <List> toprint1 = new List();
 List <int> fault1_arr = new List();
 List <int> hit1_arr = new List();
@@ -15,6 +16,7 @@ int fifoalgo(List<int> pages, int n, int capacity) {
   int position = -1;
   List <int> frame =  new List(frameSize);
   int i = 0;
+  int fault=0;
 
   for(i=0;i<n;i++)
   {
@@ -28,6 +30,7 @@ int fifoalgo(List<int> pages, int n, int capacity) {
       s1.addAll(frame);
       toprint1.add(s1);
       fault1++;
+      fault++;
       fault1_arr.add(fault1);
       if(i==0) {
         hit1_arr.add(0);
@@ -45,9 +48,8 @@ int fifoalgo(List<int> pages, int n, int capacity) {
       fault1_arr.add(fault1_arr.elementAt(fault1_arr.length-1));
     }
   }
-  return fault1;
+  return fault;
 }
-
 
 class FIFO extends StatefulWidget {
   @override
@@ -64,9 +66,9 @@ class _FIFOState extends State<FIFO> {
     List<TableRow> rows = [];
     rows.add(
       TableRow(
-          children: <Widget> [
-            Text("Pages",style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange), textAlign: TextAlign.center,),
-          ]
+        children: <Widget> [
+          Text("Pages",style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange), textAlign: TextAlign.center,),
+        ]
       )
     );
     for (int i = 0; i < frame_capacity; i++) {
@@ -155,8 +157,8 @@ class _FIFOState extends State<FIFO> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget> [
             Padding(
-              padding: EdgeInsets.fromLTRB(8, 8, 8, 10),
-              child : Text('Click on arrows to see sets', style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange))
+                padding: EdgeInsets.fromLTRB(8, 8, 8, 10),
+                child : Text('Click on arrows to see sets', style: GoogleFonts.montserrat(fontSize: 25.0,color: Colors.orange))
             ),
             Padding(
                 padding: EdgeInsets.fromLTRB(8, 8, 8, 40),
@@ -171,19 +173,40 @@ class _FIFOState extends State<FIFO> {
               children: <Widget> [
                 Padding(
                   padding: EdgeInsets.fromLTRB(8, 20, 2, 8),
-                  child : Text('Page Hit : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.green)),
+                  child : Text('Page Hit : ', style: GoogleFonts.montserrat(fontSize: 20.0,color: Colors.green)),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(2, 20, 60, 8),
-                  child : Text(hit1_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.green)),
+                  padding: EdgeInsets.fromLTRB(2, 20, 40, 8),
+                  child : Text(hit1_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 20.0,color: Colors.green)),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 20, 2, 8),
-                  child : Text('Page Fault : ', style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.red)),
+                  child : Text('Page Fault : ', style: GoogleFonts.montserrat(fontSize: 20.0,color: Colors.red)),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(2, 20, 8, 8),
-                  child : Text(fault1_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 23.0,color: Colors.red)),
+                  child : Text(fault1_arr.elementAt(click).toString(), style: GoogleFonts.montserrat(fontSize: 20.0,color: Colors.red)),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget> [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(8, 20, 2, 8),
+                  child : Text('Hit Ratio : ', style: GoogleFonts.montserrat(fontSize: 20.0,color: Colors.green)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(2, 20, 40, 8),
+                  child : Text((hit1_arr.elementAt(click)/hit1_arr.length).toStringAsFixed(2), style: GoogleFonts.montserrat(fontSize: 18.0,color: Colors.green)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 20, 2, 8),
+                  child : Text('Fault Ratio : ', style: GoogleFonts.montserrat(fontSize: 20.0,color: Colors.red)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(2, 20, 8, 8),
+                  child : Text((fault1_arr.elementAt(click)/hit1_arr.length).toStringAsFixed(2), style: GoogleFonts.montserrat(fontSize: 18.0,color: Colors.red)),
                 ),
               ],
             ),
